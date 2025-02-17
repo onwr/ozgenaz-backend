@@ -16,9 +16,13 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const book = await Book.getById(req.params.id);
+
     if (!book) {
       return res.status(404).json({ error: "Kitap bulunamadı" });
     }
+
+    await Book.incrementReadingCount(req.params.id);
+
     res.json(book);
   } catch (error) {
     next(error);

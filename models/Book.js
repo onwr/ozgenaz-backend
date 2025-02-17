@@ -23,6 +23,13 @@ class Book {
     }
   }
 
+  static async incrementReadingCount(bookId) {
+    const query =
+      "UPDATE books SET okumaSayi = okumaSayi + 1 WHERE kitapId = ?";
+    const [result] = await pool.execute(query, [bookId]);
+    return result;
+  }
+
   static async getAll(page = 1, limit = 10) {
     const offset = (page - 1) * limit;
     try {

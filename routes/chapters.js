@@ -32,6 +32,18 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.put("/like/:id", async (req, res, next) => {
+  try {
+    const result = await Chapter.incrementLike(req.params.id);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Bölüm bulunamadı" });
+    }
+    res.json({ message: "Beğeni sayısı artırıldı" });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.delete("/:id", async (req, res, next) => {
   try {
     const result = await Chapter.delete(req.params.id);

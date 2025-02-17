@@ -29,6 +29,18 @@ class Chapter {
     }
   }
 
+  static async incrementLike(id) {
+    try {
+      const [result] = await pool.execute(
+        "UPDATE chapters SET begeniSayi = begeniSayi + 1 WHERE id = ?",
+        [id]
+      );
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async update(id, chapterData) {
     const { baslik, begeniSayi, content } = chapterData;
 
