@@ -8,6 +8,7 @@ require("dotenv").config();
 const booksRouter = require("./routes/books");
 const chaptersRouter = require("./routes/chapters");
 const commentsRouter = require("./routes/comments");
+const adminRouter = require("./routes/admin");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(limiter);
 app.use("/books", booksRouter);
 app.use("/chapters", chaptersRouter);
 app.use("/comments", commentsRouter);
+app.use("/admin", adminRouter);
 
 app.use(errorHandler);
 
@@ -35,7 +37,7 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`KÜRKAYA YAZILIM. ${PORT}`);
 });
 
 module.exports = app;
