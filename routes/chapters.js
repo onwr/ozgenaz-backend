@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Chapter = require("../models/Chapter");
+const authMiddleware = require("../middleware/auth");
 
 router.get("/book/:bookId", async (req, res, next) => {
   try {
@@ -11,7 +12,7 @@ router.get("/book/:bookId", async (req, res, next) => {
   }
 });
 
-router.post("/:bookId", async (req, res, next) => {
+router.post("/:bookId", authMiddleware, async (req, res, next) => {
   try {
     const result = await Chapter.create(req.params.bookId, req.body);
     res.status(201).json(result);
@@ -20,7 +21,7 @@ router.post("/:bookId", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authMiddleware, async (req, res, next) => {
   try {
     const result = await Chapter.update(req.params.id, req.body);
     if (result.affectedRows === 0) {
@@ -44,7 +45,7 @@ router.put("/like/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authMiddleware, async (req, res, next) => {
   try {
     const result = await Chapter.delete(req.params.id);
     if (result.affectedRows === 0) {

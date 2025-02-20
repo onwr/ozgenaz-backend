@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Comment = require("../models/Comment");
+const authMiddleware = require("../middleware/auth");
 
 router.post("/:bookId", async (req, res, next) => {
   const { userId, yorum } = req.body;
@@ -26,7 +27,7 @@ router.get("/book/:bookId", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authMiddleware, async (req, res, next) => {
   try {
     const result = await Comment.delete(req.params.id);
     if (result.affectedRows === 0) {

@@ -1,14 +1,14 @@
-const db = require("../config/database");
+const { pool } = require("../config/database");
 const bcrypt = require("bcrypt");
 
 class Admin {
   static async findByUsername(username) {
     try {
-      const [admin] = await db.execute(
+      const [rows] = await pool.execute(
         "SELECT * FROM admins WHERE username = ?",
         [username]
       );
-      return admin[0];
+      return rows[0];
     } catch (error) {
       throw error;
     }
